@@ -39,8 +39,13 @@ namespace Mercadoria_Apresentation.Controllers
                 return BadRequest(ModelState);
             }
             var todasEntradasPorMercadoria = await _entradaMercadoriaService.GetByMercadoriaId(saidaMercadoriaDTO.MercadoriaId);
-            var quantidadeTotal = todasEntradasPorMercadoria.Select(x=>x.QuantidadeEntrada).Sum();
-            if (quantidadeTotal < saidaMercadoriaDTO.QuantidadeRetirada)
+            var quantidadeEntradaTotal = todasEntradasPorMercadoria.Select(x=>x.QuantidadeEntrada).Sum();
+
+            var todasSaidasPorMercadoria = await _saidaMercadoriaService.GetByMercadoriaId(saidaMercadoriaDTO.MercadoriaId);
+            var quantidadeSaidaTotal = (todasSaidasPorMercadoria.Select(x => x.QuantidadeRetirada).Sum()) + saidaMercadoriaDTO.QuantidadeRetirada;
+
+            // Valida se a quantidade total de entrada é menor que a quantidade de saidas já cadastradas mais a nova saida
+            if (quantidadeEntradaTotal < quantidadeSaidaTotal)
             {
                 return BadRequest("Quantidade informada não pode ser superior ao total de entradas");
             }

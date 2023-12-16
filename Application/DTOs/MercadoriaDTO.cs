@@ -10,7 +10,7 @@ namespace Application.DTOs
         [MaxLength(100)]
         public string Nome { get; set; }
 
-        public string NumeroRegistro { get;}
+        public string NumeroRegistro { get { return GerarRegistro(); } }
         [Required(ErrorMessage = "O Fabricante é obrigatório preencher")]
         [MinLength(3)]
         [MaxLength(100)]
@@ -24,5 +24,12 @@ namespace Application.DTOs
         [Required(ErrorMessage = "A Descrição é obrigatório preencher")]
         [MinLength(20)]
         public string Descricao { get; set; }
+
+        private string GerarRegistro()
+        {
+            // Lógica para gerar um número de registro
+            // Aqui estou usando um exemplo que encontrei na internet usando DateTime + um número aleatório
+            return $"{DateTime.Now:yyyyMMddHHmmss}-{new Random().Next(0000, 9999)}";
+        }
     }
 }

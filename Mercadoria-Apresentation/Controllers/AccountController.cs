@@ -41,7 +41,8 @@ namespace Mercadoria_Apresentation.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Invalid Login attempt.");
+                ModelState.AddModelError(string.Empty,
+                    "Verifique se a senha possui 8 caracteres, se tem letra maiuscula, minuscula e caracter especial");
                 return BadRequest(ModelState);
             }
         }
@@ -73,7 +74,7 @@ namespace Mercadoria_Apresentation.Controllers
 
             //gerar chave privada para assinar o token
             var privateKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]));
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
 
             //gerar a assinatura digital
             var credentials = new SigningCredentials(privateKey, SecurityAlgorithms.HmacSha256);
@@ -84,9 +85,9 @@ namespace Mercadoria_Apresentation.Controllers
             //gerar o token
             JwtSecurityToken token = new JwtSecurityToken(
                 //emissor
-                issuer: _configuration["Jwt:Issuer"],
+                issuer: _configuration["TokenConfiguration:Issuer"],
                 //audiencia
-                audience: _configuration["Jwt:Audience"],
+                audience: _configuration["TokenConfiguration:Audience"],
                 //claims
                 claims: claims,
                 //data de expiracao

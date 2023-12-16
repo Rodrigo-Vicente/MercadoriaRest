@@ -1,4 +1,6 @@
-﻿using Application.Mappings;
+﻿using Application.Interfaces;
+using Application.Mappings;
+using Application.Services;
 using Domain.Account;
 using Domain.Interface;
 using Infrastructure.Context;
@@ -32,6 +34,10 @@ namespace CrossCutting
             services.AddScoped<IMercadoriaRepository, MercadoriaRepository>();
             services.AddScoped<IEntradaMercadoriaRepository, EntradaMercadoriaRepository>();
             services.AddScoped<ISaidaMercadoriaRepository, SaidaMercadoriaRepository>();
+
+            services.AddScoped<IMercadoriaService, MercadoriaService>();
+            services.AddScoped<IEntradaMercadoriaService, EntradaMercadoriaService>();
+            services.AddScoped<ISaidaMercadoriaService, SaidaMercadoriaService>();
 
             services.AddScoped<IAuthenticate, AuthenticateService>();
 
