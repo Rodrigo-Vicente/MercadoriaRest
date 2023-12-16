@@ -29,10 +29,10 @@ namespace CrossCutting
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     //valores validos
-                    ValidIssuer = configuration["Jwt:Issuer"],
-                    ValidAudience = configuration["Jwt:Audience"],
+                    ValidIssuer = configuration["TokenConfiguration:Issuer"],
+                    ValidAudience = configuration["TokenConfiguration:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(
-                         Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
+                         Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
                     ClockSkew = TimeSpan.Zero
                 };
             });

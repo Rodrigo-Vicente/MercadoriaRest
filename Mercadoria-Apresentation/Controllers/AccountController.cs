@@ -23,8 +23,16 @@ namespace Mercadoria_Apresentation.Controllers
         }
 
         [HttpPost("CreateUser")]
-        public async Task<ActionResult> CreateUser([FromBody] LoginModel userInfo)
+        public async Task<ActionResult> CreateUser([FromBody] UserModel userInfo)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if(userInfo.Password != userInfo.ConfirmPassword)
+            {
+                return BadRequest("Senha informada informada nos campos não são iguais");
+            }
             var result = await _authentication.RegisterUser(userInfo.Email, userInfo.Password);
 
             if (result)
