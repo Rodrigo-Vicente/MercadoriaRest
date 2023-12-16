@@ -36,6 +36,11 @@ namespace Mercadoria_Apresentation.Controllers
             {
                 return BadRequest(ModelState);
             }
+            if(entradaMercadoriaDTO.QuantidadeEntrada <= 0)
+            {
+                return BadRequest("Entrada não pode ser inferior a 1");
+            }
+
             await _entradaMercadoriaService.Add(entradaMercadoriaDTO);
             return Ok(entradaMercadoriaDTO);
         }
