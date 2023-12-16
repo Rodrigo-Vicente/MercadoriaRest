@@ -11,15 +11,17 @@ namespace Mercadoria_Apresentation.Controllers
     public class SaidaMercadoriaController : ControllerBase
     {
         private readonly ISaidaMercadoriaService _saidaMercadoriaService;
+        private readonly IEntradaMercadoriaService _entradaMercadoriaService;
 
-        public SaidaMercadoriaController(ISaidaMercadoriaService saidaMercadoriaService)
+        public SaidaMercadoriaController(ISaidaMercadoriaService saidaMercadoriaService, IEntradaMercadoriaService entradaMercadoriaService)
         {
             _saidaMercadoriaService = saidaMercadoriaService;
+            _entradaMercadoriaService = entradaMercadoriaService;
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<SaidaMercadoriaDTO>>> ListaEntradasMercadorias()
+        public async Task<ActionResult<IEnumerable<SaidaMercadoriaDTO>>> ListaSaidasMercadorias()
         {
             var saidas = await _saidaMercadoriaService.GetSaidas();
             if (!saidas.Any())
@@ -30,17 +32,24 @@ namespace Mercadoria_Apresentation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddEntradaMercadoria([FromBody] SaidaMercadoriaDTO saidaMercadoriaDTO)
+        public async Task<ActionResult> AddSaidaMercadoria([FromBody] SaidaMercadoriaDTO saidaMercadoriaDTO)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var todasEntradasPorMercadoria = await _entradaMercadoriaService.GetByMercadoriaId(saidaMercadoriaDTO.MercadoriaId);
+            var quantidadeTotal = todasEntradasPorMercadoria.Select(x=>x.QuantidadeEntrada).Sum();
+            if (quantidadeTotal < saidaMercadoriaDTO.QuantidadeRetirada)
+            {
+                return BadRequest("Quantidade informada não pode ser superior ao total de entradas");
+            }
+
             await _saidaMercadoriaService.Add(saidaMercadoriaDTO);
             return Ok(saidaMercadoriaDTO);
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateEntradaMercadoria(int id, [FromBody] SaidaMercadoriaDTO saidaMercadoriaDTO)
+        public async Task<ActionResult> UpdateSaidaMercadoria(int id, [FromBody] SaidaMercadoriaDTO saidaMercadoriaDTO)
         {
             if (id != saidaMercadoriaDTO.id)
             {
@@ -55,7 +64,7 @@ namespace Mercadoria_Apresentation.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteMercadoria(int id)
+        public async Task<ActionResult> DeleteSaidaMercadoria(int id)
         {
             var saidaExiste = await _saidaMercadoriaService.GetById(id);
             if (saidaExiste == null)

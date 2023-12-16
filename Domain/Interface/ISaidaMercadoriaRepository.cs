@@ -9,5 +9,6 @@ namespace Domain.Interface
         Task<SaidaMercadoria> CreateSaidaMercadoria(SaidaMercadoria saidaMercadoria);
         Task<SaidaMercadoria> UpdateSaidaMercadoria(SaidaMercadoria saidaMercadoria);
         Task<SaidaMercadoria> DeleteSaidaMercadoria(SaidaMercadoria saidaMercadoria);
+        Task<List<SaidaMercadoria>> GetByMercadoriaId(int Mercadoriaid);
     }
 }

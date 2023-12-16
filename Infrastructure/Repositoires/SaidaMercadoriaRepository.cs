@@ -39,6 +39,12 @@ namespace Infrastructure.Repositoires
             return mercadoria;
         }
 
+        public async Task<List<SaidaMercadoria>> GetByMercadoriaId(int Mercadoriaid)
+        {
+            var mercadoria = await _context.SaidaMercadorias.Where(x => x.MercadoriaId == Mercadoriaid).ToListAsync();
+            return mercadoria;
+        }
+
         public async Task<SaidaMercadoria> UpdateSaidaMercadoria(SaidaMercadoria saidaMercadoria)
         {
             _context.Update(saidaMercadoria);

@@ -9,5 +9,6 @@ namespace Application.Interfaces
         Task Add(EntradaMercadoriaDTO entradaMercadoriaDTO);
         Task Update(EntradaMercadoriaDTO entradaMercadoriaDTO);
         Task Remove(int? id);
+        Task<List<EntradaMercadoriaDTO>> GetByMercadoriaId(int Mercadoriaid);
     }
 }

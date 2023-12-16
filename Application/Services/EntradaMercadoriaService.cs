@@ -45,5 +45,11 @@ namespace Application.Services
             var entrada = await _entradaMercadoriaRepository.GetById(id);
             return _mapper.Map<EntradaMercadoriaDTO>(entrada);
         }
+
+        public async Task<List<EntradaMercadoriaDTO>> GetByMercadoriaId(int Mercadoriaid)
+        {
+            var entrada = await _entradaMercadoriaRepository.GetByMercadoriaId(Mercadoriaid);
+            return _mapper.Map<List<EntradaMercadoriaDTO>>(entrada);
+        }
     }
 }

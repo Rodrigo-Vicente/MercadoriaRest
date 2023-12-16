@@ -23,15 +23,12 @@ namespace Mercadoria_Apresentation.Controllers
         }
 
         [HttpPost("CreateUser")]
-        [ApiExplorerSettings(IgnoreApi = true)]
-
         public async Task<ActionResult> CreateUser([FromBody] LoginModel userInfo)
         {
             var result = await _authentication.RegisterUser(userInfo.Email, userInfo.Password);
 
             if (result)
             {
-                //return GenerateToken(userInfo);
                 return Ok($"User {userInfo.Email} was created successfully");
             }
             else
@@ -49,7 +46,6 @@ namespace Mercadoria_Apresentation.Controllers
             if (result)
             {
                 return GenerateToken(userInfo);
-                //return Ok($"User {userInfo.Email} login successfully");
             }
             else
             {
@@ -60,11 +56,10 @@ namespace Mercadoria_Apresentation.Controllers
 
         private UserToken GenerateToken(LoginModel userInfo)
         {
-            //declarações do usuário
             var claims = new[]
             {
                 new Claim("email", userInfo.Email),
-                new Claim("meuvalor", "oque voce quiser"),
+                new Claim("teste", "apenas um teste de claim"),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
