@@ -1,9 +1,12 @@
 Arquitetura do Sistema:
+
 Tecnologias Utilizadas:
+
 Backend: ASP.NET Core (C#)
 Frontend: React.js
 Banco de Dados: SQL
 Funcionalidades:
+
 Backend (ASP.NET Core):
 Gerenciamento de Mercadorias:
 
