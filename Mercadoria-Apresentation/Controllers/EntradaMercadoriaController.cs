@@ -19,6 +19,7 @@ namespace Mercadoria_Apresentation.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<EntradaMercadoriaDTO>>> ListaEntradasMercadorias()
         {
             var entradas = await _entradaMercadoriaService.GetEntradas();

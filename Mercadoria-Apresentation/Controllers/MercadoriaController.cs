@@ -19,6 +19,7 @@ namespace Mercadoria_Apresentation.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MercadoriaDTO>>> ListaMercadorias() 
         {
             var mercadorias = await _mercadoriaService.GetMercadoria();
@@ -38,6 +39,16 @@ namespace Mercadoria_Apresentation.Controllers
             }
             await _mercadoriaService.Add(mercadoriaDTO);
             return Ok(mercadoriaDTO);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<MercadoriaDTO>>> MercadoriaById(int id)
+        {
+            var mercadorias = await _mercadoriaService.GetById(id);
+            if (mercadorias == null)
+            {
+                return NotFound("Nenhum produto encontrado");
+            }
+            return Ok(mercadorias);
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateMercadoria(int id,[FromBody] MercadoriaDTO mercadoriaDTO)

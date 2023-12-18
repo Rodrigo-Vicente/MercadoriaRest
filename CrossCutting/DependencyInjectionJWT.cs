@@ -13,13 +13,8 @@ namespace CrossCutting
         {
             //informar o tipo de autenticacao JWT-Bearer
             //definir o modelo de desafio de autenticacao
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            //habilita a autenticacao JWT usando o esquema e desafio definidos
-            //validar o token
+            services.AddAuthentication(
+                JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
